@@ -1,0 +1,16 @@
+<h1>Listing Change Set</h1>
+
+<table  class="table table-striped table-bordered table-condensed">
+  <tr>
+    <th>File name</th>
+    <th>Change type</th>
+  </tr>
+
+<% @change_sets.each do |change_set| %>
+  <tr>
+    <td><%= change_set.file_name %></td>
+    <td><%= change_set.change_type.gsub('Paths','').capitalize unless change_set.change_type.nil?%></td>
+  </tr>
+<% end %>
+</table>
+

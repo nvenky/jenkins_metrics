@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>File name:</b>
+  <%= @change_set.file_name %>
+</p>
+
+<p>
+  <b>Change type:</b>
+  <%= @change_set.change_type %>
+</p>
+
+<p>
+  <b>Build:</b>
+  <%= @change_set.build %>
+</p>
+
+
+<%= link_to 'Edit', edit_change_set_path(@change_set) %> |
+<%= link_to 'Back', change_sets_path %>

@@ -1,0 +1,50 @@
+<h1>Builds for <%=@project_name%> Project</h1>
+<div class="alert alert-info">
+    <a class="close" data-dismiss="alert">x</a>
+    <h4 class="alert-heading">Heads up!</h4>
+    This report ignores failed builds and hence their might be few differences in the number.
+</div>
+
+<%= link_to 'Load new Builds', load_latest_builds_project_builds_path, :class => 'btn btn-primary' %>
+
+<br/>
+<br/>
+<table class="table table-striped table-bordered table-condensed">
+  <tr>
+    <th>Build number</th>
+    <th>Total test</th>
+    <th>Skipped test</th>
+    <th>Build Date</th>
+    <th>Authors</th>
+    <th>Total Changes</th>
+    <th>Java Files (ex Test)</th>
+    <th>Test Files</th>
+    <th>Change Set</th>
+  </tr>
+
+<% @builds.each do |build| %>
+  <tr>
+    <td><%= build.build_number %></td>
+    <td><%= build.total_test %></td>
+    <td><%= build.skipped_test %></td>
+    <td><%= build.build_date.strftime("%m-%d-%Y %H:%M") if !build.build_date.nil?%></td>
+    <td><% build.authors.each do |author| %>
+		    <span class='label'><%= author.name %></span>
+	    <% end %>	    
+    </td>
+    <td><%= build.total_changes %></td>
+    <% if build.java_changes > build.test_changes %>
+	    <td> <span class='label label-info'><%= build.java_changes %></span></td>
+	    <td> <span class='label label-important'><%= build.test_changes %></span></td>
+    <%else%>
+            <td><%= build.java_changes %></td>
+	    <td><%= build.test_changes %></td>
+    <%end%>
+    <td><%= link_to 'Change Set', change_sets_path(build) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+

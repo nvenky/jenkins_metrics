@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  file_name: MyString
+  change_type: MyString
+  build: 
+
+two:
+  file_name: MyString
+  change_type: MyString
+  build: 

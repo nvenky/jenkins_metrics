@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  build_number: 1
+  total_test: 1
+  skipped_test: 1
+
+two:
+  build_number: 1
+  total_test: 1
+  skipped_test: 1

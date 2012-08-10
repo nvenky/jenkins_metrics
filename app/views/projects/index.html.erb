@@ -1,0 +1,17 @@
+<h1>Listing projects</h1>
+
+<table class="table table-striped table-bordered table-condensed">
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @projects.each do |project| %>
+  <tr>
+    <td><%= link_to project.name, project_builds_path(project) %></td>
+    <td><%= project.url %> </td>
+  </tr>
+<% end %>
+</table>
+
+<br/>
+<%= link_to 'Add a new Project', new_project_path %>

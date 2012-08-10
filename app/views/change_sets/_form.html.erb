@@ -1,0 +1,29 @@
+<%= form_for(@change_set) do |f| %>
+  <% if @change_set.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@change_set.errors.count, "error") %> prohibited this change_set from being saved:</h2>
+
+      <ul>
+      <% @change_set.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :file_name %><br />
+    <%= f.text_field :file_name %>
+  </div>
+  <div class="field">
+    <%= f.label :change_type %><br />
+    <%= f.text_field :change_type %>
+  </div>
+  <div class="field">
+    <%= f.label :build %><br />
+    <%= f.text_field :build %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
