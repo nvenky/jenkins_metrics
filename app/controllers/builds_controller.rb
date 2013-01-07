@@ -1,3 +1,4 @@
+require 'uri'
 require 'open-uri'
 require 'json'
 
@@ -83,12 +84,12 @@ class BuildsController < ApplicationController
   def load_builds(project_id)
      project = Project.find(project_id)
      url = project.url.strip     
-     json = JSON.parse(open("#{url}/api/json").read)
+     json = load_json("#{url}/api/json")
      
      json['builds'].reverse.each do |build| 
 	build_num =build['number']
 	if (Build.find_by_project_id_and_build_number(project_id, build_num).nil?)
-          test_data_json = JSON.parse(open("#{url}/#{build_num}/api/json").read)
+          test_data_json = load_json("#{url}/#{build_num}/api/json")
 	  if test_data_json['result'] == 'SUCCESS'	  	 
 	     load_new_build test_data_json, build_num, project
 	  end
@@ -100,12 +101,12 @@ class BuildsController < ApplicationController
      projects = Project.all
      projects.each do |project|
 	     url = project.url.strip     
-	     json = JSON.parse(open("#{url}/api/json").read)
+	     json = load_json("#{url}/api/json")
 	     json['builds'].reverse.each do |json_build| 
 		build_num = json_build['number']
 		build = Build.find_by_project_id_and_build_number(project.id, build_num) 
 		if (!build.nil?)
-	          build_json = JSON.parse(open("#{url}/#{build_num}/api/json").read)
+	          build_json = load_json("#{url}/#{build_num}/api/json")
 		  build.build_date = build_time build_json
 		  build.save!
 		end
@@ -117,12 +118,12 @@ class BuildsController < ApplicationController
      projects = Project.all
      projects.each do |project|
 	     url = project.url.strip     
-	     json = JSON.parse(open("#{url}/api/json").read)
+	     json = load_json("#{url}/api/json")
 	     json['builds'].reverse.each do |json_build| 
 		build_num = json_build['number']
 		build = Build.find_by_project_id_and_build_number(project.id, build_num) 
 		if (!build.nil?)
-	          build_json = JSON.parse(open("#{url}/#{build_num}/api/json").read)
+	          build_json = load_json("#{url}/#{build_num}/api/json")
 		  load_change_sets build_json, build
 		end
 	     end
@@ -190,6 +191,10 @@ class BuildsController < ApplicationController
 
   def load_health(json)
      json['healthReport'][0]['description'].scan(/\d+/)     
+  end
+
+  def load_json(url)
+     JSON.parse(open(URI.escape(url)).read)
   end
 
 end
